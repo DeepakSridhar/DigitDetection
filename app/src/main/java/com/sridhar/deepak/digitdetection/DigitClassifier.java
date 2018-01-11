@@ -33,10 +33,10 @@ public class DigitClassifier extends AppCompatActivity {
     private static final int INPUT_SIZE = 28;
     private static final int IMAGE_MEAN = 117;
     private static final float IMAGE_STD = 1;
-    private static final String INPUT_NAME = "input";
-    private static final String OUTPUT_NAME = "output";
+    private static final String INPUT_NAME = "conv2d_1_input";
+    private static final String OUTPUT_NAME = "dense_2/Softmax";
 
-    private static final String MODEL_FILE = "file:///android_asset/mnist_model_graph.pb";
+    private static final String MODEL_FILE = "file:///android_asset/opt_mnist_convnet-keras.pb";
     private static final String LABEL_FILE =
             "file:///android_asset/graph_label_strings.txt";
 

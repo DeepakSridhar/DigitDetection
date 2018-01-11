@@ -6,16 +6,19 @@ package com.sridhar.deepak.digitdetection;
 
 import android.graphics.PointF;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sridhar.deepak.digitdetection.view.DrawModel;
 import com.sridhar.deepak.digitdetection.view.DrawView;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -24,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
     private static final String TAG = "MainActivity";
 
-    private static final int PIXEL_WIDTH = 20;
+    private static final int PIXEL_WIDTH = 28;
 
     private TextView mResultText;
 
@@ -36,15 +39,17 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     private DrawView mDrawView;
 
     private View detectButton;
+    private TextToSpeech textspeech;
 
     private PointF mTmpPoint = new PointF();
 
-    private static final int INPUT_SIZE = 20;
-    private static final String INPUT_NAME = "dense_1_input";
+    private static final int INPUT_SIZE = 28;
+    private static final String INPUT_NAME = "conv2d_1_input";
     private static final String OUTPUT_NAME = "dense_2/Softmax";
 
     //private static final String MODEL_FILE = "file:///android_asset/opt_tf_digit_model.pb";
-    private static final String MODEL_FILE = "file:///android_asset/frozen_tf_digit_model.pb";
+    private static final String MODEL_FILE = "file:///android_asset/opt_mnist_convnet-keras.pb";
+    //private static final String MODEL_FILE = "file:///android_asset/frozen_tf_digit_model.pb";
     private static final String LABEL_FILE =
             "file:///android_asset/graph_label_strings.txt";
 
@@ -69,6 +74,15 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             @Override
             public void onClick(View v) {
                 onDetectClicked();
+            }
+        });
+
+        textspeech=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(status != TextToSpeech.ERROR) {
+                    textspeech.setLanguage(Locale.US);
+                }
             }
         });
 
@@ -178,11 +192,13 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
         Log.d(TAG, "Pixel Dimension: " + pixels.length);
 
-        final List<Classifier.Recognition> results = classifier.recognizeImage(pixels,0);
+        final List<Classifier.Recognition> results = classifier.recognizeImage(pixels,1);
 
         if (results.size() > 0) {
             String value = " Number is : " +results.get(0).getTitle();
             mResultText.setText(value);
+            Toast.makeText(getApplicationContext(), value,Toast.LENGTH_SHORT).show();
+            textspeech.speak(value, TextToSpeech.QUEUE_FLUSH, null);
         }
 
     }
