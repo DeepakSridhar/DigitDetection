@@ -17,7 +17,7 @@ import android.widget.ListView;
 import java.lang.reflect.Field;
 
 public class Menu extends ListActivity {
-    String classes[]={"MainActivity","DigitClassifier"};
+    String classes[]={"MainActivity","DigitClassifier","HappyFaceDetector"};
 
 
 

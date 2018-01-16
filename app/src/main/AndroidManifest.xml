@@ -91,6 +91,15 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.sridhar.deepak.digitdetection.HappyFaceDetector"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="com.sridhar.deepak.digitdetection.HAPPYFACEDETECTOR" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

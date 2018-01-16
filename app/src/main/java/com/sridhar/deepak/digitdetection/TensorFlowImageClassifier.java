@@ -117,6 +117,9 @@ public class TensorFlowImageClassifier implements Classifier {
 
         // Copy the input data into TensorFlow.
         TraceCompat.beginSection("feed");
+        if (s==2){
+            inferenceInterface.feed(inputName, pixels, new long[]{1,inputSize,inputSize,3});
+        }
         if (s==1){
             inferenceInterface.feed(inputName, pixels, new long[]{1,inputSize,inputSize,1});
         }else {
