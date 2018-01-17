@@ -105,7 +105,7 @@ datagen.fit(train_x)
 model = load_model('out/digit_model_3.h5')
 print("Model loaded!")
 
-model.fit_generator(datagen.flow(train_x, train_y, batch_size=32),callbacks=[tensorboard], samples_per_epoch=len(train_x),epochs=3)
+model.fit_generator(datagen.flow(train_x, train_y, batch_size=128), validation_data = (cross_val_x,cross_val_y), callbacks=[tensorboard], samples_per_epoch=len(train_x),epochs=5)
 
 # model.fit(x=train_x,y=train_y,callbacks=[tensorboard],epochs=20,batch_size=32)
 
